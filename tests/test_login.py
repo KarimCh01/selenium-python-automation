@@ -20,6 +20,8 @@ from pages.login_page import LoginPage
         ),
     ]
 )
+
+@pytest.mark.smoke
 def test_login(
     driver,
     username,
