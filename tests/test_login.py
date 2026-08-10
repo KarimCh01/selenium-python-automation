@@ -1,22 +1,42 @@
+import pytest
+
 from pages.login_page import LoginPage
 
-def test_valid_login(driver):
 
+@pytest.mark.parametrize(
+    "username,password,expected_url,expected_error",
+    [
+        (
+            "standard_user",
+            "secret_sauce",
+            "https://www.saucedemo.com/inventory.html",
+            None
+        ),
+        (
+            "KARIM",
+            "PASSWORDD",
+            "https://www.saucedemo.com/",
+            "Epic sadface: Username and password do not match any user in this service"
+        ),
+    ]
+)
+def test_login(
+    driver,
+    username,
+    password,
+    expected_url,
+    expected_error
+):
     driver.get("https://www.saucedemo.com/")
+
     login_page = LoginPage(driver)
-    login_page.login("standard_user", "secret_sauce")
 
-    assert driver.current_url =="https://www.saucedemo.com/inventory.html"
+    login_page.login(
+        username,
+        password
+    )
 
-def test_invalid_login(driver):
+    assert driver.current_url == expected_url
 
-    driver.get("https://www.saucedemo.com/")
-    login_page = LoginPage(driver)
-    login_page.login("KARIM", "PASSWORDD")
-
-    assert login_page.get_error_message() == \
-        "Epic sadface: Username and password do not match any user in this service"
-
-    assert driver.current_url =="https://www.saucedemo.com/"
-
-
+    if expected_error:
+        assert login_page.get_error_message() == expected_error
