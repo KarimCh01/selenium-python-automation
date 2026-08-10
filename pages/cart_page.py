@@ -1,32 +1,34 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-class CartPage:
-    TITLE=(By.CSS_SELECTOR,'[data-test="title"]')
-    PRODUCT_NAME =(By.CSS_SELECTOR,'[data-test="inventory-item-name"]')
-    CHECKOUT_BUTTON = (By.ID,"checkout")
+from pages.base_page import BasePage
 
-    def __init__(self,driver):
-        self.driver=driver
-        self.wait=WebDriverWait(driver,10)
+
+class CartPage(BasePage):
+
+    TITLE = (
+        By.CSS_SELECTOR,
+        '[data-test="title"]'
+    )
+
+    PRODUCT_NAME = (
+        By.CSS_SELECTOR,
+        '[data-test="inventory-item-name"]'
+    )
+
+    CHECKOUT_BUTTON = (
+        By.ID,
+        "checkout"
+    )
 
     def get_title(self):
-
-        title=self.wait.until(
-            EC.visibility_of_element_located(self.TITLE)
-        )
-        return title.text
+        return self.get_text(self.TITLE)
 
     def get_product_name(self):
-        product=self.wait.until(
-
-        EC.visibility_of_element_located(self.PRODUCT_NAME)
-        )
-        return product.text
+        return self.get_text(self.PRODUCT_NAME)
 
     def click_checkout(self):
-        check_button =self.wait.until(
-            EC.element_to_be_clickable(self.CHECKOUT_BUTTON)
+        self.click(self.CHECKOUT_BUTTON)
+
+        self.wait_for_url(
+            "https://www.saucedemo.com/checkout-step-one.html"
         )
-        check_button.click()
