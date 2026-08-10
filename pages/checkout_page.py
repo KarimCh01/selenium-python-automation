@@ -56,7 +56,6 @@ class CheckoutPage(BasePage):
 
     def click_continue(self):
         self.click(self.CONTINUE_BUTTON)
-
         self.wait_for_url(
             "https://www.saucedemo.com/checkout-step-two.html"
         )

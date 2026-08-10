@@ -29,6 +29,3 @@ class CartPage(BasePage):
     def click_checkout(self):
         self.click(self.CHECKOUT_BUTTON)
 
-        self.wait_for_url(
-            "https://www.saucedemo.com/checkout-step-one.html"
-        )

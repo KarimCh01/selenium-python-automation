@@ -20,6 +20,9 @@ class BasePage:
         )
         element.clear()
         element.send_keys(text)
+        self.wait.until(
+            lambda driver: driver.find_element(*locator).get_attribute("value") == text
+        )
 
     def get_text(self, locator):
         element = self.wait.until(

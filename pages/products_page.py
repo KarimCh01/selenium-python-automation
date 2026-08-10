@@ -72,6 +72,3 @@ class ProductsPage(BasePage):
     def open_cart(self):
         self.click(self.CART_LINK)
 
-        self.wait_for_url(
-            "https://www.saucedemo.com/cart.html"
-        )
