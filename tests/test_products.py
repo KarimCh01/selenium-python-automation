@@ -1,5 +1,6 @@
 import pytest
 
+from config.config import BASE_URL, STANDARD_USERNAME, STANDARD_PASSWORD
 from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
@@ -8,10 +9,10 @@ from pages.checkout_complete_page import CheckoutCompletePage
 
 
 def login(driver):
-    driver.get("https://www.saucedemo.com/")
+    driver.get(BASE_URL)
 
     login_page = LoginPage(driver)
-    login_page.login("standard_user", "secret_sauce")
+    login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
 
 
 @pytest.mark.smoke

@@ -1,9 +1,12 @@
+import pytest
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+@pytest.mark.regression
 def test_alert(driver):
     driver.get(
         "https://the-internet.herokuapp.com/javascript_alerts"
@@ -23,6 +26,7 @@ def test_alert(driver):
     alert.accept()
 
 
+@pytest.mark.regression
 def test_iframe(driver):
     driver.get(
         "https://the-internet.herokuapp.com/iframe"
@@ -45,6 +49,7 @@ def test_iframe(driver):
     driver.switch_to.default_content()
 
 
+@pytest.mark.regression
 def test_new_tab(driver):
     driver.get(
         "https://the-internet.herokuapp.com/windows"
@@ -77,6 +82,7 @@ def test_new_tab(driver):
     )
 
 
+@pytest.mark.regression
 def test_hover(driver):
     driver.get(
         "https://the-internet.herokuapp.com/hovers"
@@ -105,6 +111,7 @@ def test_hover(driver):
     assert first_caption.is_displayed()
 
 
+@pytest.mark.regression
 def test_file_upload(driver, tmp_path):
     driver.get(
         "https://the-internet.herokuapp.com/upload"
@@ -130,6 +137,7 @@ def test_file_upload(driver, tmp_path):
     )
 
 
+@pytest.mark.regression
 def test_dynamic_element(driver):
     driver.get(
         "https://the-internet.herokuapp.com/dynamic_loading/1"

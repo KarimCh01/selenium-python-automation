@@ -1,64 +1,42 @@
 # Selenium Python QA Automation Framework
 
-Production-style QA automation framework built with **Python, Selenium WebDriver, and Pytest**, covering UI, API, and end-to-end testing with CI/CD integration.
+QA automation framework built with **Python, Selenium WebDriver, and Pytest**, covering UI and end-to-end testing with CI integration.
 
 ## Tech Stack
 
 - Python
 - Selenium WebDriver
 - Pytest
-- Requests
 - Page Object Model (POM)
 - Docker
 - GitHub Actions
-- pytest-xdist
-- HTML Reporting
+- pytest-html
+- Chrome & Firefox
 
 ## Features
 
-- Page Object Model architecture
-- Reusable Pytest fixtures and `conftest.py`
-- Explicit waits and robust element handling
-- Positive and negative test scenarios
-- Data-driven and parameterized testing
+- Page Object Model (POM) with reusable BasePage
+- Pytest fixtures and `conftest.py`
+- Parameterized / data-driven testing
+- Smoke, regression, and E2E markers
+- Explicit waits and dynamic element handling
+- Alerts, iframes, tabs/windows, hover, and file uploads
 - Cross-browser and headless execution
-- Parallel test execution
-- Screenshots and logs on failure
-- REST API automation
-- API + UI integration testing
-- Dockerized execution
-- Automated GitHub Actions CI/CD
+- Screenshots automatically captured on failures
+- Logging and HTML test reports
+- Configuration and test-data management
+- Dockerized test execution
+- Automated GitHub Actions CI on push
 
 ## Test Coverage
 
-### Authentication
 - Valid and invalid login
-- Empty credentials
-- Locked-out users
-- Error-message validation
-
-### Products
-- Product validation
-- Product count
-- Price and name sorting
-- Dynamic element validation
-
-### Shopping Cart
-- Add/remove products
-- Cart badge validation
-- Product and price verification
-
-### Checkout
-- Customer information
-- Order summary validation
-- Complete E2E purchase workflow
-
-### API
-- GET / POST / PUT / PATCH / DELETE
-- Status-code validation
-- JSON payload validation
-- Headers and authentication
-- Positive and negative API scenarios
+- Product validation and sorting
+- Add products to cart
+- Cart validation
+- Checkout information
+- Complete E2E purchase
+- Advanced Selenium browser interactions
 
 ## Architecture
 
@@ -71,12 +49,11 @@ selenium-python-automation/
 │   ├── cart_page.py
 │   └── checkout_page.py
 ├── tests/
-│   ├── ui/
-│   └── api/
+├── config/
 ├── utils/
-├── test_data/
 ├── reports/
 ├── screenshots/
+├── logs/
 ├── conftest.py
 ├── pytest.ini
 ├── requirements.txt
@@ -86,47 +63,26 @@ selenium-python-automation/
 
 ## Run Tests
 
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run all tests:
-
 ```bash
 pytest -v
-```
-
-Run in parallel:
-
-```bash
-pytest -n auto
-```
-
-Run smoke tests:
-
-```bash
 pytest -m smoke
-```
-
-Generate HTML report:
-
-```bash
+pytest -m regression
+pytest -m e2e
+pytest --browser firefox
 pytest --html=reports/report.html --self-contained-html
 ```
 
-Run with Docker:
+## Docker
 
 ```bash
 docker build -t selenium-tests .
 docker run --rm selenium-tests
 ```
 
-## CI/CD
+## CI
 
-GitHub Actions automatically executes the automated test suite on pushes and pull requests and publishes test artifacts for failed/test runs.
+**GitHub Actions** automatically runs the Selenium/Pytest test suite in headless Chrome on every push and publishes test artifacts.
 
 ## Purpose
 
-This project demonstrates practical **QA Automation / SDET engineering** skills including test design, UI automation, API testing, framework architecture, test isolation, reporting, parallel execution, containerization, and CI/CD.
+Demonstrates practical **QA Automation / SDET** skills including Selenium, Pytest, POM, parameterization, test organization, cross-browser testing, reporting, CI, and Docker.

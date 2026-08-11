@@ -1,5 +1,6 @@
 import pytest
 
+from config.config import BASE_URL, STANDARD_USERNAME, STANDARD_PASSWORD
 from pages.login_page import LoginPage
 
 
@@ -7,15 +8,15 @@ from pages.login_page import LoginPage
     "username,password,expected_url,expected_error",
     [
         (
-            "standard_user",
-            "secret_sauce",
-            "https://www.saucedemo.com/inventory.html",
+            STANDARD_USERNAME,
+            STANDARD_PASSWORD,
+            BASE_URL + "inventory.html",
             None
         ),
         (
             "KARIM",
             "PASSWORDD",
-            "https://www.saucedemo.com/",
+            BASE_URL,
             "Epic sadface: Username and password do not match any user in this service"
         ),
     ]
@@ -29,7 +30,7 @@ def test_login(
     expected_url,
     expected_error
 ):
-    driver.get("https://www.saucedemo.com/")
+    driver.get(BASE_URL)
 
     login_page = LoginPage(driver)
 
