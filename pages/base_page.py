@@ -25,7 +25,7 @@ class BasePage:
 
         element.click()
 
-    def type_text(self, locator, text, attempts=4):
+    def type_text(self, locator, text, attempts=2):
         self.logger.info(
             f"Typing into element: {locator}"
         )
@@ -34,7 +34,7 @@ class BasePage:
             EC.element_to_be_clickable(locator)
         )
 
-        retry_wait = WebDriverWait(self.driver, 3)
+        retry_wait = WebDriverWait(self.driver, 2)
 
         for attempt in range(attempts):
             # Only clear when there's something to clear: calling
@@ -53,11 +53,22 @@ class BasePage:
                 )
                 return
             except TimeoutException:
-                # Headless Chrome occasionally drops keystrokes from
-                # send_keys entirely. Re-typing recovers.
-                if attempt == attempts - 1:
-                    raise
                 element = self.driver.find_element(*locator)
+
+        # Headless Chrome occasionally drops native key events for a
+        # field entirely. As a last resort, insert the text the way the
+        # browser itself would (paste/autofill) and confirm it landed.
+        element.click()
+
+        self.driver.execute_script(
+            "document.execCommand('insertText', false, arguments[0]);",
+            text
+        )
+
+        self.wait.until(
+            lambda driver:
+            driver.find_element(*locator).get_attribute("value") == text
+        )
 
     def get_text(self, locator):
         self.logger.info(
@@ -88,3 +99,19 @@ class BasePage:
         self.wait.until(
             EC.url_to_be(url)
         )
+
+    def click_and_wait_for_url(self, locator, url_fragment, attempts=3):
+        for attempt in range(attempts):
+            self.click(locator)
+
+            try:
+                self.wait.until(
+                    EC.url_contains(url_fragment)
+                )
+                return
+            except TimeoutException:
+                # Headless Chrome occasionally drops a click entirely.
+                # A full wait has already confirmed nothing happened, so
+                # re-clicking the (still present) element is safe.
+                if attempt == attempts - 1:
+                    raise

@@ -1,6 +1,29 @@
 # Selenium Python QA Automation Framework
 
-QA automation framework built with **Python, Selenium WebDriver, and Pytest**, covering UI and end-to-end testing with CI integration.
+UI and end-to-end automation framework built with **Python, Selenium WebDriver, and Pytest**, featuring Page Object Model architecture, advanced browser interactions, and HTML reporting.
+
+## Systems Under Test
+
+### SauceDemo
+
+Primary application used for storefront end-to-end testing:
+
+- Valid and invalid login
+- Product validation and sorting
+- Shopping cart operations
+- Checkout validation
+- Complete E2E purchase workflow
+
+### The Internet (Herokuapp)
+
+Used for advanced Selenium browser interaction testing:
+
+- JavaScript alerts
+- iframes
+- Multiple windows and tabs
+- Mouse hover interactions
+- File uploads
+- Dynamic elements and explicit waits
 
 ## Tech Stack
 
@@ -8,37 +31,39 @@ QA automation framework built with **Python, Selenium WebDriver, and Pytest**, c
 - Selenium WebDriver
 - Pytest
 - Page Object Model (POM)
-- Docker
-- GitHub Actions
 - pytest-html
 - Chrome & Firefox
 
-## Features
+## Framework Features
 
-- Page Object Model (POM) with reusable BasePage
+- Page Object Model with reusable `BasePage`
 - Pytest fixtures and `conftest.py`
 - Parameterized / data-driven testing
 - Smoke, regression, and E2E markers
 - Explicit waits and dynamic element handling
-- Alerts, iframes, tabs/windows, hover, and file uploads
+- Advanced browser interactions
 - Cross-browser and headless execution
-- Screenshots automatically captured on failures
-- Logging and HTML test reports
-- Configuration and test-data management
-- Dockerized test execution
-- Automated GitHub Actions CI on push
+- Automatic screenshots on failures
+- Logging and HTML reporting
+- Centralized configuration (`config/config.py`)
 
-## Test Coverage
+## Test Flow
 
-- Valid and invalid login
-- Product validation and sorting
-- Add products to cart
-- Cart validation
-- Checkout information
-- Complete E2E purchase
-- Advanced Selenium browser interactions
+```text
+Login
+  ↓
+Products
+  ↓
+Add to Cart
+  ↓
+Cart Validation
+  ↓
+Checkout
+  ↓
+Order Completion
+```
 
-## Architecture
+## Project Structure
 
 ```text
 selenium-python-automation/
@@ -47,7 +72,8 @@ selenium-python-automation/
 │   ├── login_page.py
 │   ├── products_page.py
 │   ├── cart_page.py
-│   └── checkout_page.py
+│   ├── checkout_page.py
+│   └── checkout_complete_page.py
 ├── tests/
 ├── config/
 ├── utils/
@@ -56,33 +82,48 @@ selenium-python-automation/
 ├── logs/
 ├── conftest.py
 ├── pytest.ini
-├── requirements.txt
-├── Dockerfile
-└── .github/workflows/tests.yml
+└── requirements.txt
 ```
 
 ## Run Tests
 
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the complete suite:
+
 ```bash
 pytest -v
+```
+
+Run specific test categories:
+
+```bash
 pytest -m smoke
 pytest -m regression
 pytest -m e2e
+```
+
+Cross-browser execution:
+
+```bash
+pytest --browser chrome
 pytest --browser firefox
+```
+
+Generate an HTML report:
+
+```bash
 pytest --html=reports/report.html --self-contained-html
 ```
 
-## Docker
-
-```bash
-docker build -t selenium-tests .
-docker run --rm selenium-tests
-```
-
-## CI
-
-**GitHub Actions** automatically runs the Selenium/Pytest test suite in headless Chrome on every push and publishes test artifacts.
-
 ## Purpose
 
-Demonstrates practical **QA Automation / SDET** skills including Selenium, Pytest, POM, parameterization, test organization, cross-browser testing, reporting, CI, and Docker.
+Demonstrates practical **QA Automation / SDET engineering** skills including UI automation, E2E testing, Selenium, Pytest framework architecture, POM, data-driven testing, advanced browser interactions, cross-browser testing, failure diagnostics, and reporting.
+
+## Next Steps
+
+Not implemented yet, planned for later: Git/GitHub workflow polish, GitHub Actions CI, and optionally Docker.

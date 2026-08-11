@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
 from pages.base_page import BasePage
 
@@ -58,12 +57,7 @@ class CheckoutPage(BasePage):
         )
 
     def click_continue(self):
-        self.click(
-            self.CONTINUE_BUTTON
-        )
-
-        self.wait.until(
-            EC.url_contains(
-                "checkout-step-two.html"
-            )
+        self.click_and_wait_for_url(
+            self.CONTINUE_BUTTON,
+            "checkout-step-two.html"
         )

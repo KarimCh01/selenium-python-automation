@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 
-from config.config import BASE_URL
 from pages.base_page import BasePage
 
 
@@ -25,10 +24,9 @@ class CheckoutCompletePage(BasePage):
         return self.get_text(self.TITLE)
 
     def click_finish(self):
-        self.click(self.FINISH_BUTTON)
-
-        self.wait_for_url(
-            BASE_URL + "checkout-complete.html"
+        self.click_and_wait_for_url(
+            self.FINISH_BUTTON,
+            "checkout-complete.html"
         )
 
     def get_complete_message(self):
